@@ -62,8 +62,6 @@ def mn_alter():
     if not id_producto:
         print(f'{msg_nf} con el id {id}')
     else:
-        #print(id_producto)
-        # print(f'Cantidad actual: {id_producto[0][3]}')
         print(tabulate(id_producto[0:4], headers=headers, tablefmt="fancy_grid")) 
         new_qty = check_qty()
         db_update(id, new_qty)
