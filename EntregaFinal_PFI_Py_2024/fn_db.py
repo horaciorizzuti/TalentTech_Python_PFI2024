@@ -68,7 +68,7 @@ def db_read_id(id):
     cur.execute(query, insert_val)
     # product = cur.fetchone()
     product = cur.fetchall()
-    headers = [desc[0].capitalize() for desc in cur.description] # agregado para tabulacion
+    headers = [desc[0].capitalize() for desc in cur.description]
     con.close()
     return product, headers
 
@@ -93,10 +93,10 @@ def db_delete(id):
 
 def db_read_st_min():
     db_con()
-    query = "SELECT * FROM productos WHERE cantidad < ?"
-    insert_val = "stock_minimo"
-    cur.execute(query, insert_val)
+    query = "SELECT * FROM productos WHERE cantidad < stock_minimo"
+    cur.execute(query)
     prod = cur.fetchall()
+    headers = [desc[0].capitalize() for desc in cur.description]
     con.close()
-    return prod
+    return prod, headers
 

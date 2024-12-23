@@ -58,11 +58,13 @@ def mn_list():
 def mn_alter():
     mn_list()
     id = int(input("\n Ingrese el id del producto que desea modificar la cantidad: "))
-    id_producto = db_read_id(id)
+    id_producto, headers = db_read_id(id)
     if not id_producto:
         print(f'{msg_nf} con el id {id}')
     else:
-        print(f"Cantidad actual {id_producto[4]} ")
+        #print(id_producto)
+        # print(f'Cantidad actual: {id_producto[0][3]}')
+        print(tabulate(id_producto[0:4], headers=headers, tablefmt="fancy_grid")) 
         new_qty = check_qty()
         db_update(id, new_qty)
         print("\n" + msg_succ)
@@ -71,12 +73,13 @@ def mn_alter():
 def mn_del():
     mn_list()
     id = int(input("\n Ingrese el id del producto a eliminar: "))
-    id_producto = db_read_id(id)
+    id_producto, headers = db_read_id(id)
     if not id_producto:
         print(f"{msg_nf} con ID: {id}")
     else:
         print("\n Se eliminará el siguiente registro:")
-        print(id_producto)
+        # print(id_producto)
+        print(tabulate(id_producto, headers=headers, tablefmt="fancy_grid")) 
         borrar = input(
             "\n presione 'Y' para confirmar la eliminación del producto o enter para abortar: ").lower()
         if borrar == "y":
@@ -97,9 +100,8 @@ def mn_search():
 
 
 def mn_stk_min():
-    lista = db_read_st_min()
+    lista, headers = db_read_st_min()
     if not lista:
-        print(f'{msg_nf}') # {stock_min}
+        print(f'{msg_nf}')
     else:
-        for producto in lista:
-            print(producto)
+        print(tabulate(lista, headers=headers, tablefmt="fancy_grid"))
